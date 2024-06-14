@@ -1,7 +1,6 @@
-import Typesense from "typesense"
-import ChessData from "./data/games.json"
-
-;(async () => {
+import Typesense from "typesense";
+import ChessData from "./data/games.json";
+(async () => {
   const typesense = new Typesense.Client({
     apiKey: process.env.TYPESENSE_ADMIN_API_KEY || "xyz",
     nodes: [
@@ -11,28 +10,24 @@ import ChessData from "./data/games.json"
         protocol: process.env.PUBLIC_TYPESENSE_PROTOCOL || "http",
       },
     ],
-  })
+  });
 
   try {
-    await typesense.collections("chess").retrieve()
-    console.log("Found existing collection of chess games")
+    await typesense.collections("chess").retrieve();
+    console.log("Found existing collection of chess games");
 
-    console.log("Deleting collection")
-    await typesense.collections("chess").delete()
+    console.log("Deleting collection");
+    await typesense.collections("chess").delete();
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
 
-  console.log("Creating schema...")
+  console.log("Creating schema...");
 
   await typesense.collections().create({
     name: "chess",
     enable_nested_fields: true,
     fields: [
-      {
-        name: "id",
-        type: "string",
-      },
       {
         name: "rated",
         type: "bool",
@@ -101,18 +96,18 @@ import ChessData from "./data/games.json"
         facet: true,
       },
     ],
-  })
+  });
 
-  console.log("Populating collection...")
+  console.log("Populating collection...");
 
   try {
     const returnData = await typesense
       .collections("chess")
       .documents()
-      .import(ChessData)
+      .import(ChessData);
 
-    console.log("Return data: ", returnData)
+    console.log("Return data: ", returnData);
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-})()
+})();
