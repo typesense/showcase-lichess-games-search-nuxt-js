@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "typesense:index": "pnpm dlx tsx ./scripts/index-typesense.ts"
+    "typesense:index": "pnpm dlx tsx ./scripts/index-typesense.ts",
+    "typesense:start": "docker compose up -d"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.7",
