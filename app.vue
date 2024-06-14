@@ -50,7 +50,8 @@ const searchClient = ref(typesenseInstantsearchAdapter().searchClient)
                 'mb-10 flex flex-col gap-4 lg:gap-6 lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center lg:items-start',
               'ais-InfiniteHits-item': 'w-full',
               'ais-InfiniteHits-loadMore':
-                'rounded-lg bg-zinc-100 dark:bg-zinc-900 px-4 py-2 text-md font-semibold w-1/4 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors duration-200',
+                'rounded-lg bg-zinc-100 dark:bg-zinc-900 px-4 py-2 cursor-pointer text-md font-semibold w-1/4 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors duration-200',
+              'ais-InfiniteHits-loadMore--disabled': 'hidden'
             }" v-show="hits.length > 0">
               <template v-slot:item="{ item }">
                 <Hit :item="item" />
