@@ -42,19 +42,25 @@ const searchClient = ref(typesenseInstantsearchAdapter().searchClient)
       <div class="flex mt-20">
         <ais-configure :hitsPerPage="5" />
         <Filter />
-
-        <ais-infinite-hits :show-previous="false" :class-names="{
-          'ais-InfiniteHits': 'w-full mb-10',
-          'ais-InfiniteHits-list':
-            'mb-10 flex flex-col gap-4 lg:gap-6 lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center lg:items-start',
-          'ais-InfiniteHits-item': 'w-full',
-          'ais-InfiniteHits-loadMore':
-            'rounded-lg bg-zinc-100 dark:bg-zinc-900 px-4 py-2 text-md font-semibold w-1/4 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors duration-200',
-        }">
-          <template v-slot:item="{ item }">
-            <Hit :item="item" />
+        <ais-state-results class="w-full">
+          <template v-slot="{ results: { hits, query } }">
+            <ais-infinite-hits :show-previous="false" :class-names="{
+              'ais-InfiniteHits': 'w-full mb-10',
+              'ais-InfiniteHits-list':
+                'mb-10 flex flex-col gap-4 lg:gap-6 lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center lg:items-start',
+              'ais-InfiniteHits-item': 'w-full',
+              'ais-InfiniteHits-loadMore':
+                'rounded-lg bg-zinc-100 dark:bg-zinc-900 px-4 py-2 text-md font-semibold w-1/4 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors duration-200',
+            }" v-show="hits.length > 0">
+              <template v-slot:item="{ item }">
+                <Hit :item="item" />
+              </template>
+            </ais-infinite-hits>
+            <div v-show="hits.length === 0">
+              No results have been found for {{ query }}.
+            </div>
           </template>
-        </ais-infinite-hits>
+        </ais-state-results>
       </div>
     </ais-instant-search>
   </main>
